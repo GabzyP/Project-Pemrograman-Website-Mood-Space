@@ -38,12 +38,12 @@ MoodSpace/
 │   ├── ...          # Folder mood lainnya
 │   ├── logo.png
 │   └── profil/      # Foto anggota kelompok
-├── index.html       # Halaman Utama (Console Pengendali Mood)
+├── index.html       # Halaman Utama (Pengendali Mood)
 ├── music.html       # Halaman Musik
 ├── video.html       # Halaman Video
 ├── quotes.html      # Halaman Quotes
-├── about.html       # Halaman Tentang Kami
-├── form.html        # Halaman Kontak
+├── about.html       # Halaman Deskripsi Website
+├── form.html        # Halaman Laporan
 ├── style.css        # Styling utama & Logika Tampilan
 ├── script.js        # Logika Memori & Navigasi Hash
 └── README.md        # Dokumentasi Proyek
@@ -72,4 +72,5 @@ MoodSpace/
 5. Kezia
 
 Dibuat untuk memenuhi tugas Praktikum Pemrograman Web I.
+
 
