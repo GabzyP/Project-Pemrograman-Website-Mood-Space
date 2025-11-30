@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Mood Space</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="joy">
+    <nav>
+        <img src="assets/logo.png" alt="MoodSpace Logo" class="small-logo-img">
+        <ul class="nav-links">
+            <li><a href="music.html">Musik</a></li>
+            <li><a href="video.html">Video</a></li>
+            <li><a href="quotes.html">Quotes</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="container home-container">
+        <div class="glass-box" style="max-width: 800px; text-align: left; margin: 0 auto;">
+            <h1 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Laporan</h1>
+                
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" name="Nama" placeholder="Siapa Namamu?" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Kategori Laporan</label>
+                    <select name="Kategori" required style="width: 100%; padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.4); font-family: inherit; font-size: 1rem; color: inherit; outline: none;">
+                        <option value="" disabled selected>-- Pilih Kategori --</option>
+                        <option value="Bug/Error">Bug / Error pada Website</option>
+                        <option value="Tampilan">Masalah Tampilan</option>
+                        <option value="Konten">Konten Tidak Sesuai Mood</option>
+                        <option value="Saran">Saran & Masukan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-bottom: 10px;">Seberapa Penting Laporan Ini?</label>
+                    <div style="display: flex; gap: 20px; background: rgba(255,255,255,0.3); padding: 10px; border-radius: 10px;">
+                        <label style="font-weight: normal; cursor: pointer;">
+                            <input type="radio" name="Prioritas" value="Tidak-Penting" checked> Tidak Penting
+                        </label>
+                        <label style="font-weight: normal; cursor: pointer;">
+                            <input type="radio" name="Prioritas" value="Biasa" checked> Biasa
+                        </label>
+                        <label style="font-weight: normal; cursor: pointer;">
+                            <input type="radio" name="Prioritas" value="Penting"> Penting
+                        </label>
+                        <label style="font-weight: normal; cursor: pointer;">
+                            <input type="radio" name="Prioritas" value="Darurat"> Darurat
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Detail Laporan:</label>
+                    <textarea name="Pesan" rows="5" placeholder="Ceritakan detail masalahnya di sini..." required></textarea>
+                </div>
+
+                <div class="form-group" style="font-size: 0.9rem;">
+                    <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" name="Setuju" value="Ya" required style="width: auto;">
+                        Saya menyetujui data ini digunakan untuk perbaikan moodspace
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit">Kirim Laporan</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="floating-menu">
+        <a href="index.html" class="float-btn" title="Console"><i class="fas fa-gamepad"></i></a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

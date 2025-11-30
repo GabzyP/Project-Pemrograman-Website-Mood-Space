@@ -1,0 +1,808 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #333;
+    transition: background 0.8s ease; 
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--c1) 0%, var(--c2) 50%, var(--c3) 100%);
+    animation: bgMove 15s ease-in-out infinite; 
+    filter: blur(80px); 
+    opacity: 0.8;
+    z-index: -1; 
+}
+
+@keyframes bgMove {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(5%, 5%) rotate(120deg); }
+    66% { transform: translate(-5%, 5%) rotate(240deg); }
+}
+
+:root { --c1: #FFFACD; --c2: #FFD700; --c3: #FFA500; }
+
+
+body.joy, 
+body:has(#joy:target) { 
+    --c1: #fff59d; --c2: #fbc02d; --c3: #ff9800; color: #4a3b00; 
+}
+body.sadness, 
+body:has(#sadness:target) { 
+    --c1: #e3f2fd; --c2: #64b5f6; --c3: #1565c0; color: #0d47a1; 
+}
+body.anger, 
+body:has(#anger:target) { 
+    --c1: #ffebee; --c2: #e53935; --c3: #b71c1c; color: #580808; 
+}
+body.disgust, 
+body:has(#disgust:target) { 
+    --c1: #e8f5e9; --c2: #66bb6a; --c3: #2e7d32; color: #1b5e20; 
+}
+body.fear, 
+body:has(#fear:target) { 
+    --c1: #f3e5f5; --c2: #ab47bc; --c3: #6a1b9a; color: #4a148c; 
+}
+body.anxiety, 
+body:has(#anxiety:target) { 
+    --c1: #fff3e0; --c2: #ff9800; --c3: #e65100; color: #bf360c; 
+}
+body.ennui, 
+body:has(#ennui:target) { 
+    --c1: #eceff1; --c2: #546e7a; --c3: #263238; color: #102027; 
+}
+body.embarrassment, 
+body:has(#embarrassment:target) { 
+    --c1: #fce4ec; --c2: #f06292; --c3: #880e4f; color: #880e4f; 
+}
+body.envy, 
+body:has(#envy:target) { 
+    --c1: #e0f2f1; --c2: #26a69a; --c3: #004d40; color: #004d40; 
+}
+
+.mood-section {
+    display: none;
+}
+
+.mood-content { 
+    display: none !important; 
+    animation: fadeIn 0.5s ease; 
+}
+
+#joy:target ~ .container .mood-content#joy-section,
+#joy:target ~ .container-video .mood-content#joy-section,
+#joy:target ~ .container-quotes .mood-content#joy-section,
+#joy:target ~ .local-music-section .mood-content#joy-section { display: block !important; }
+
+#sadness:target ~ .container .mood-content#sadness-section,
+#sadness:target ~ .container-video .mood-content#sadness-section,
+#sadness:target ~ .container-quotes .mood-content#sadness-section,
+#sadness:target ~ .local-music-section .mood-content#sadness-section { display: block !important; }
+
+#anger:target ~ .container .mood-content#anger-section,
+#anger:target ~ .container-video .mood-content#anger-section,
+#anger:target ~ .container-quotes .mood-content#anger-section,
+#anger:target ~ .local-music-section .mood-content#anger-section { display: block !important; }
+
+#disgust:target ~ .container .mood-content#disgust-section,
+#disgust:target ~ .container-video .mood-content#disgust-section,
+#disgust:target ~ .container-quotes .mood-content#disgust-section,
+#disgust:target ~ .local-music-section .mood-content#disgust-section { display: block !important; }
+
+#fear:target ~ .container .mood-content#fear-section,
+#fear:target ~ .container-video .mood-content#fear-section,
+#fear:target ~ .container-quotes .mood-content#fear-section,
+#fear:target ~ .local-music-section .mood-content#fear-section { display: block !important; }
+
+#anxiety:target ~ .container .mood-content#anxiety-section,
+#anxiety:target ~ .container-video .mood-content#anxiety-section,
+#anxiety:target ~ .container-quotes .mood-content#anxiety-section,
+#anxiety:target ~ .local-music-section .mood-content#anxiety-section { display: block !important; }
+
+#ennui:target ~ .container .mood-content#ennui-section,
+#ennui:target ~ .container-video .mood-content#ennui-section,
+#ennui:target ~ .container-quotes .mood-content#ennui-section,
+#ennui:target ~ .local-music-section .mood-content#ennui-section { display: block !important; }
+
+#embarrassment:target ~ .container .mood-content#embarrassment-section,
+#embarrassment:target ~ .container-video .mood-content#embarrassment-section,
+#embarrassment:target ~ .container-quotes .mood-content#embarrassment-section,
+#embarrassment:target ~ .local-music-section .mood-content#embarrassment-section { display: block !important; }
+
+#envy:target ~ .container .mood-content#envy-section,
+#envy:target ~ .container-video .mood-content#envy-section,
+#envy:target ~ .container-quotes .mood-content#envy-section,
+#envy:target ~ .local-music-section .mood-content#envy-section { display: block !important; }
+
+body:not(:has(:target)) #joy-section { 
+    display: block !important; 
+}
+
+/* =========================================
+   NAVIGASI
+========================================= */
+nav {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.logo-img {
+    max-width: 400px; 
+    width: 50%;       
+    height: auto;   
+    margin-bottom: 0.2rem; 
+    display: block;   
+    margin-left: auto; 
+    margin-right: auto;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); 
+}
+
+.small-logo-img {
+    max-width: 100px; 
+    width: 10%;       
+    height: auto;   
+    margin-bottom: 0.2rem; 
+    display: block;   
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); 
+}
+
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { 
+    color: inherit; text-decoration: none; font-weight: 600; 
+    padding: 0.5rem 1rem; border-radius: 10px; transition: 0.3s;
+}
+.nav-links a:hover, .nav-links a.active {
+    background: rgba(255,255,255,0.4);
+}
+
+/* =========================================
+   UMUM
+========================================= */
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+.container-video {
+    max-width: 100%; 
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+@keyframes fadeIn { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
+
+.floating-menu {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999; 
+}
+
+.float-btn {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+    transition: 0.3s;
+    border: 2px solid rgba(0,0,0,0.1);
+}
+
+.float-btn:hover {
+    transform: scale(1.1);
+    background: var(--c2);
+    color: white;
+    border-color: white;
+}
+
+/* =========================================
+   HALAMAN HOME 
+========================================= */
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem; 
+}
+
+.member-card {
+    aspect-ratio: 1 / 1; 
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(14, 0, 0, 0.2);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    background-color: #cecece4c;
+}
+
+.member-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none; margin-bottom: 0; background-color: transparent;
+}
+
+.member-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.member-photo-inner {
+    width: 120px;    
+    height: 120px;
+    padding: 5px;    
+    background: rgba(0, 0, 0, 0.1); 
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.member-card:hover .member-img {
+    transform: scale(1.1);
+    border-color: white;
+}
+
+.member-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.home-wrapper {
+    display: flex; justify-content: center; align-items: center; min-height: 80vh;
+}
+
+.glass-box {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    padding: 4rem 2rem;
+    text-align: center;
+    width: 800px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.home-container .glass-box {
+    width: 100%;            
+    max-width: 1200px;      
+    min-height: auto;      
+    display: block;
+    margin: 0.5rem auto;      
+    padding: 2rem 2rem;      
+}
+
+.home-title { 
+    font-size: 4rem; 
+    margin-bottom: 1rem; 
+    font-weight: 800; 
+}
+
+.home-desc { 
+    font-size: 1.3rem; 
+    line-height: 1.6; 
+    margin-bottom: 0.5rem; 
+    font-weight: 500; 
+    max-width: 800px;
+    margin: 0 auto 0.5rem auto;
+    font-style: italic;
+}
+
+/* =========================================
+   HALAMAN CONSOLE 
+========================================= */
+.hero { text-align: center; margin-bottom: 2rem; }
+.hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+
+.mood-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.mood-card {
+    position: relative;
+    height: 220px; 
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border: 2px solid rgba(189, 189, 189, 0.315);
+}
+.mood-card:hover { 
+    transform: translateY(-8px); 
+}
+
+.mood-img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: 0.5s; 
+}
+
+.mood-card:hover .mood-img { 
+    transform: scale(1.1); 
+}
+
+.card-overlay {
+    position: absolute; 
+    bottom: 0; left: 0; 
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white; 
+    text-align: center;
+}
+
+.card-overlay h3 { 
+    font-size: 1.2rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+/* =========================================
+   HALAMAN VIDEO 
+========================================= */
+
+.cinema-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.main-player-wrapper {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 1.2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.main-video-frame {
+    width: 100%;
+    height: 95%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.main-video-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.main-info {
+    margin-top: 1rem;
+    color: #333;
+}
+.main-info h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.2; }
+.main-info p { font-size: 1rem; opacity: 0.8; }
+
+.side-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 700px;
+    overflow-y: auto; 
+    padding-right: 10px;
+}
+
+.side-list::-webkit-scrollbar { width: 6px; }
+.side-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+
+.side-card {
+    display: flex;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid rgba(255,255,255,0.3);
+    align-items: center;
+}
+
+.side-card:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: translateX(5px);
+}
+
+.side-thumb {
+    width: 160px;         
+    height: 90px;         
+    flex-shrink: 0;       
+    border-radius: 10px; 
+    overflow: hidden;     
+    background: #a3a3a370;    
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    display: flex;        
+    align-items: center;
+    justify-content: center;
+}
+
+.side-thumb img, .side-thumb video {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+.side-info h4 {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.side-info p {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* =========================================
+   HALAMAN QUOTES 
+========================================= */
+.quotes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.quote-card-box {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: 0.3s;
+    display: flex; flex-direction: column; align-items: center;
+}
+
+.quote-card-box:hover { 
+    transform: translateY(-5px); 
+    background: rgba(255,255,255,0.6); 
+}
+
+.quote-card-box::before {
+    content: '“';
+    position: absolute;
+    top: -20px;
+    left: 10px;
+    font-size: 8rem;
+    color: rgba(255,255,255,0.3);
+    font-family: serif;
+    z-index: 1;
+}
+
+.quote-img {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover;
+    border-radius: 15px; 
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.quote-text { 
+    font-size: 1.1rem; 
+    font-style: italic; 
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: #333;
+    position: relative;
+    z-index: 2;
+}
+
+.quote-author {
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    z-index: 2;
+}
+
+.input-card {
+    background: rgba(255, 255, 255, 0.6); 
+    border: 2px dashed rgba(0,0,0,0.1); 
+    cursor: text;
+}
+
+.quote-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #999;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-style: italic;
+}
+
+.quote-input:focus { 
+    outline: none; 
+    border-color: #333; 
+}
+
+.author-input {
+    width: 80%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #999;
+    padding: 0.3rem;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+add-btn {
+    margin-top: 1rem;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+
+.add-btn:hover { 
+    transform: scale(1.1); 
+}
+
+/* =========================================
+   HALAMAN FORM
+========================================= */
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+.form-group input, .form-group textarea {
+    width: 100%; padding: 1rem; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.3);
+    font-family: inherit; font-size: 1rem; color: inherit;
+}
+.btn-submit {
+    background: var(--c3); color: white; padding: 1rem; border-radius: 12px; border: none;
+    width: 100%; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+.btn-submit:hover { filter: brightness(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+@media (max-width: 768px) {
+    .mood-grid { grid-template-columns: repeat(2, 1fr); }
+    .container-video { padding: 1rem; }
+    .glass-box { padding: 2rem 1rem; }
+    .home-title { font-size: 2.5rem; }
+    .home-desc { font-size: 1rem; }
+    .nav-links { display: none; }
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 1rem;
+        justify-content: center;
+    }
+    .member-card:last-child { 
+        grid-column: span 2; 
+        width: 50%; 
+        margin: 0 auto;
+    }
+    .member-card:nth-last-child(-n+2) {
+        grid-column: span 1; 
+    }
+}
+
+@media (max-width: 1024px) {
+    
+    .music-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .team-grid {
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: center;
+    }   
+    .member-card:nth-last-child(-n+2) {
+        grid-column: span 1; 
+    }
+    .member-card:last-child {
+        grid-column: span 3; 
+        width: 33%;
+        margin: 0 auto;
+    }
+}
+
+/* =========================================
+   HALAMAN MUSIC 
+========================================= */
+
+.spotify-wrapper {
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto 1rem auto;  
+    background: transparent; 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15); 
+    border-radius: 12px; 
+    overflow: hidden; 
+}
+
+.spotify-frame {
+    width: 100%;
+    height: 352px;
+    border: none;
+    display: block; 
+}
+
+.section-title {
+    text-align: left; 
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.local-music-section {
+    max-width: 100%;
+    margin: 0 auto;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.music-card {
+    background: rgba(255, 255, 255, 0.4); 
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.music-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.music-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.music-cover-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1; 
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.music-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.music-card:hover .music-cover {
+    transform: scale(1.1); 
+}
+
+/* CSS :target selector for showing mood sections - NO JAVASCRIPT */
+/* All mood sections are hidden by default, shown when their anchor is :target */
+
+.music-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.music-card:hover .music-cover {
+    transform: scale(1.1); 
+}
+
+.music-controls {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+
+.music-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.music-info p {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.music-cover.playing {
+    animation: spin 3s linear infinite;
+    border-radius: 50%;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+@media (max-width: 1024px) {
+    .music-grid { grid-template-columns: repeat(3, 1fr); }
+    .team-grid { 
+        grid-template-columns: repeat(3, 1fr); 
+        justify-content: center; 
+    }   
+    .member-card:nth-last-child(-n+2) { grid-column: span 1; }
+    .member-card:last-child { grid-column: span 3; width: 33%; margin: 0 auto; }
+}
+
+@media (max-width: 900px) {
+    .cinema-grid { grid-template-columns: 1fr; }
+    .side-list { max-height: none; }
+    .quotes-grid { grid-template-columns: repeat(2, 1fr); } 
+}
+
+@media (max-width: 768px) {
+    .mood-grid { grid-template-columns: repeat(2, 1fr); }
+    .music-grid { grid-template-columns: repeat(2, 1fr); } 
+    .quotes-grid { grid-template-columns: 1fr; } 
+    .container-video { padding: 1rem; }
+    .glass-box { padding: 2rem 1rem; }
+    .home-title { font-size: 2.5rem; }
+    .home-desc { font-size: 1rem; }
+    .nav-links { display: none; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; justify-content: center;}
+    .member-card:last-child { grid-column: span 2; width: 50%; margin: 0 auto;}
+    .member-card:nth-last-child(-n+2) { grid-column: span 1; }
+}
